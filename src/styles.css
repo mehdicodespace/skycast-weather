@@ -1,0 +1,11 @@
+:root {
+  font-family: 'DM Sans Variable', sans-serif;
+  color: #29343d;
+  background: #f5f6f8;
+}
+body {
+  margin: 0;
+}
+main {
+  padding: 32px;
+}
