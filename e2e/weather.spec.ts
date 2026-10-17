@@ -165,6 +165,36 @@ test('offline mode identifies cached data', async ({ page, context }) => {
   await expect(page.getByRole('button', { name: 'Refresh weather' })).toBeDisabled()
 })
 
+test('theme follows the system initially, persists a choice, and stays accessible', async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: 'dark' })
+  await page.goto('/')
+  await expect(page.getByRole('heading', { name: 'The week ahead' })).toBeVisible()
+  const toggle = page.getByRole('switch', { name: 'Dark mode' })
+  await expect(toggle).toBeChecked()
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 })
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+      .analyze()
+    expect(
+      results.violations.map((item) => ({
+        id: item.id,
+        nodes: item.nodes.map((node) => node.target),
+      })),
+    ).toEqual([])
+  }
+  await toggle.click()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  await page.reload()
+  await expect(toggle).not.toBeChecked()
+  await toggle.focus()
+  await page.keyboard.press('Space')
+  await expect(toggle).toBeChecked()
+})
+
 test('sidebar and developer credit remain visible while the page scrolls in a short window', async ({
   page,
 }) => {

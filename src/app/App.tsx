@@ -9,7 +9,9 @@ import {
   LoaderCircle,
   LocateFixed,
   MapPin,
+  Moon,
   RefreshCw,
+  Sun,
   X,
 } from 'lucide-react'
 import { CitySearch } from '../features/places/CitySearch'
@@ -27,6 +29,7 @@ import { calendar, temperature, weatherCondition } from '../features/weather/for
 import { forecastOptions } from '../features/weather/queries'
 import type { Place, Unit } from '../features/weather/types'
 import { WeatherIcon } from '../features/weather/WeatherIcon'
+import { applyTheme, readTheme } from './theme'
 
 function DeveloperCredit() {
   return (
@@ -91,12 +94,17 @@ function PlaceCard({
 export function App() {
   const [place, setPlace] = useState(readPlaceFromUrl)
   const [unit, setUnit] = useState<Unit>(readUnit)
+  const [theme, setTheme] = useState(readTheme)
   const [saved, setSaved] = useState(readSavedPlaces)
   const [locating, setLocating] = useState(false)
   const [notice, setNotice] = useState('')
   const [online, setOnline] = useState(navigator.onLine)
   const query = useQuery(forecastOptions(place))
   const isSaved = saved.some((item) => samePlace(item, place))
+
+  useEffect(() => {
+    applyTheme(theme)
+  }, [theme])
 
   useEffect(() => {
     const onPop = () => {
@@ -243,6 +251,21 @@ export function App() {
               </button>
             ))}
           </div>
+          <button
+            className="theme-toggle"
+            role="switch"
+            aria-checked={theme === 'dark'}
+            aria-label="Dark mode"
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            onClick={() => {
+              const next = theme === 'dark' ? 'light' : 'dark'
+              setTheme(next)
+              persist('theme', next)
+            }}
+          >
+            <Sun size={15} aria-hidden="true" />
+            <Moon size={15} aria-hidden="true" />
+          </button>
         </header>
         <main id="forecast" tabIndex={-1}>
           <div className="page-heading">
