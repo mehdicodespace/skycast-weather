@@ -6,7 +6,6 @@ import {
   Check,
   CloudSun,
   Compass,
-  ExternalLink,
   LoaderCircle,
   LocateFixed,
   MapPin,
@@ -28,6 +27,19 @@ import { calendar, temperature, weatherCondition } from '../features/weather/for
 import { forecastOptions } from '../features/weather/queries'
 import type { Place, Unit } from '../features/weather/types'
 import { WeatherIcon } from '../features/weather/WeatherIcon'
+
+function DeveloperCredit() {
+  return (
+    <div className="developer-credit">
+      <span>Developed by</span>
+      <a href="https://github.com/mehdicodespace" target="_blank" rel="noreferrer">
+        Mehdi Rafiei
+        <ArrowUpRight size={12} aria-hidden="true" />
+      </a>
+      <span className="developer-title">Senior Front end developer</span>
+    </div>
+  )
+}
 
 function PlaceCard({
   place,
@@ -155,46 +167,48 @@ export function App() {
         Skip to forecast
       </a>
       <aside className="sidebar" aria-label="Places and about">
-        <a className="brand" href="/" aria-label="Skycast home">
-          <span className="brand-icon">
-            <CloudSun size={27} strokeWidth={1.7} />
-          </span>
-          skycast<span className="brand-period">.</span>
-        </a>
-        <p className="brand-tagline">A little clarity in the forecast.</p>
-        <div className="sidebar-divider" />
-        <div className="sidebar-label">
-          <Compass size={15} />
-          <h2>YOUR WEATHER, ANYWHERE</h2>
+        <div className="sidebar-content">
+          <a className="brand" href="/" aria-label="Skycast home">
+            <span className="brand-icon">
+              <CloudSun size={27} strokeWidth={1.7} />
+            </span>
+            skycast<span className="brand-period">.</span>
+          </a>
+          <p className="brand-tagline">A little clarity in the forecast.</p>
+          <div className="sidebar-divider" />
+          <div className="sidebar-label">
+            <Compass size={15} />
+            <h2>YOUR WEATHER, ANYWHERE</h2>
+          </div>
+          <button className="location-button" onClick={locate} disabled={locating}>
+            {locating ? <LoaderCircle size={17} className="spin" /> : <LocateFixed size={17} />}{' '}
+            {locating ? 'Finding your location…' : 'Use my location'}
+            <ArrowUpRight size={15} />
+          </button>
+          <div className="places-heading">
+            <h2>{saved.length ? 'Saved places' : 'Explore places'}</h2>
+            <span>{saved.length ? `${saved.length}/8` : 'A FEW FAVORITES'}</span>
+          </div>
+          <div className="places-list">
+            {(saved.length ? saved : SUGGESTED_PLACES).map((item) => (
+              <PlaceCard
+                key={item.id}
+                place={item}
+                unit={unit}
+                active={samePlace(item, place)}
+                onSelect={() => selectPlace(item)}
+                onRemove={
+                  saved.length
+                    ? () => savePlaces(saved.filter((entry) => entry.id !== item.id))
+                    : undefined
+                }
+              />
+            ))}
+          </div>
+          <p className="saved-hint">
+            <Bookmark size={14} /> Save a city to keep it close.
+          </p>
         </div>
-        <button className="location-button" onClick={locate} disabled={locating}>
-          {locating ? <LoaderCircle size={17} className="spin" /> : <LocateFixed size={17} />}{' '}
-          {locating ? 'Finding your location…' : 'Use my location'}
-          <ArrowUpRight size={15} />
-        </button>
-        <div className="places-heading">
-          <h2>{saved.length ? 'Saved places' : 'Explore places'}</h2>
-          <span>{saved.length ? `${saved.length}/8` : 'A FEW FAVORITES'}</span>
-        </div>
-        <div className="places-list">
-          {(saved.length ? saved : SUGGESTED_PLACES).map((item) => (
-            <PlaceCard
-              key={item.id}
-              place={item}
-              unit={unit}
-              active={samePlace(item, place)}
-              onSelect={() => selectPlace(item)}
-              onRemove={
-                saved.length
-                  ? () => savePlaces(saved.filter((entry) => entry.id !== item.id))
-                  : undefined
-              }
-            />
-          ))}
-        </div>
-        <p className="saved-hint">
-          <Bookmark size={14} /> Save a city to keep it close.
-        </p>
         <div className="sidebar-bottom">
           <div className="little-sky">
             <CloudSun size={40} strokeWidth={1.3} />
@@ -206,12 +220,7 @@ export function App() {
             <br />a little outside.
           </h3>
           <p>Whatever the weather brings.</p>
-          <div className="sidebar-credit">
-            Designed & built by{' '}
-            <a href="https://github.com/mehdicodespace" target="_blank" rel="noreferrer">
-              Mehdi Rafiei <ExternalLink size={11} />
-            </a>
-          </div>
+          <DeveloperCredit />
         </div>
       </aside>
 
@@ -324,6 +333,7 @@ export function App() {
           )}
         </main>
         <footer className="page-footer">
+          <DeveloperCredit />
           <span>
             <span className="status-dot" />
             {query.data

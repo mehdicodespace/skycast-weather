@@ -164,3 +164,24 @@ test('offline mode identifies cached data', async ({ page, context }) => {
   await expect(page.getByText(/You’re offline. Showing the last available forecast./)).toBeVisible()
   await expect(page.getByRole('button', { name: 'Refresh weather' })).toBeDisabled()
 })
+
+test('sidebar and developer credit remain visible while the page scrolls in a short window', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 630 })
+  await page.goto('/')
+  await expect(page.getByRole('heading', { name: 'The week ahead' })).toBeVisible()
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  const bounds = await page.locator('.sidebar').boundingBox()
+  expect(bounds?.y).toBe(0)
+  expect(bounds?.height).toBe(630)
+  await expect(page.locator('.sidebar .developer-credit')).toBeInViewport({ ratio: 1 })
+  await expect(page.locator('.sidebar').getByText('Senior Front end developer')).toBeVisible()
+  await expect(page.locator('.sidebar .developer-credit a')).toHaveAttribute(
+    'href',
+    'https://github.com/mehdicodespace',
+  )
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.locator('.page-footer').scrollIntoViewIfNeeded()
+  await expect(page.locator('.page-footer .developer-credit')).toBeInViewport({ ratio: 1 })
+})

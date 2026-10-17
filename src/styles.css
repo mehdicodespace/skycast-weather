@@ -109,8 +109,8 @@ button {
   flex-direction: column;
   position: sticky;
   top: 0;
-  height: 100vh;
-  min-height: 740px;
+  height: 100dvh;
+  min-height: 0;
 }
 .brand {
   display: flex;
@@ -291,7 +291,7 @@ button {
   color: #5c6975;
   margin-top: 10px;
 }
-.sidebar-credit {
+.developer-credit {
   border-top: 1px solid var(--line);
   margin-top: 33px;
   padding-top: 20px;
@@ -299,7 +299,7 @@ button {
   color: #5c6975;
   line-height: 1.9;
 }
-.sidebar-credit a {
+.developer-credit a {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -1633,4 +1633,22 @@ main {
     font-size: 10px;
     padding: 8px 6px;
   }
+}
+
+.sidebar-content { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; padding: 4px; margin: -4px; }
+.sidebar-bottom { flex-shrink: 0; }
+.developer-credit a { font-size: 13px; font-weight: 600; width: fit-content; }
+.developer-credit > span { display: block; }
+.developer-title { font-size: 11px; }
+.page-footer > .developer-credit { display: none; }
+@media (min-width: 681px) and (max-height: 900px) {
+  .sidebar { padding-top: 24px; padding-bottom: 20px; }
+  .sidebar-bottom { padding-top: 16px; }
+  .sidebar-bottom > .little-sky, .sidebar-bottom > h3, .sidebar-bottom > p { display: none; }
+  .sidebar-bottom > .developer-credit { margin-top: 0; padding-top: 16px; }
+}
+@media (max-width: 680px) {
+  .sidebar-content { overflow: visible; }
+  .page-footer { flex-wrap: wrap; }
+  .page-footer > .developer-credit { display: block; width: 100%; max-width: none; margin: 0 0 8px; padding: 0 0 16px; border-top: 0; border-bottom: 1px solid var(--line); }
 }
