@@ -2,6 +2,8 @@
 
 A weather dashboard built with React 19, TypeScript, Vite, and TanStack Query. Search for a city, check the next few hours, and see how the rest of the week is shaping up.
 
+**Live demo:** [https://skycast-weather-mehdispace.netlify.app/](https://skycast-weather-mehdispace.netlify.app/)
+
 | Light theme                                                                                                                | Dark theme                                                                                                             |
 | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | ![Skycast in light mode with current conditions, hourly weather, and the seven-day forecast](docs/screenshots/desktop.png) | ![Skycast in dark mode with current conditions, hourly weather, and the seven-day forecast](docs/screenshots/dark.png) |
