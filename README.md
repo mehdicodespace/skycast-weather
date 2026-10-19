@@ -2,7 +2,9 @@
 
 A weather dashboard built with React 19, TypeScript, Vite, and TanStack Query. Search for a city, check the next few hours, and see how the rest of the week is shaping up.
 
-![Skycast desktop view showing current conditions, hourly weather, and the seven-day forecast](docs/screenshots/desktop.png)
+| Light theme                                                                                                                | Dark theme                                                                                                             |
+| -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| ![Skycast in light mode with current conditions, hourly weather, and the seven-day forecast](docs/screenshots/desktop.png) | ![Skycast in dark mode with current conditions, hourly weather, and the seven-day forecast](docs/screenshots/dark.png) |
 
 ## What’s inside
 
@@ -23,8 +25,6 @@ Forecasts come from [Open-Meteo](https://open-meteo.com/). There’s no API key 
 <img src="docs/screenshots/mobile.png" width="320" alt="Skycast mobile layout with horizontally scrollable places and hourly forecasts" />
 
 ![Keyboard-accessible city search](docs/screenshots/city-search.png)
-
-![Skycast in dark mode](docs/screenshots/dark.png)
 
 </details>
 
