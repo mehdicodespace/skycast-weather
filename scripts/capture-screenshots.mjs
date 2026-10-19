@@ -29,6 +29,18 @@ try {
   await search.fill('')
   await page.setViewportSize({ width: 390, height: 844 })
   await page.screenshot({ path: 'docs/screenshots/mobile.png', fullPage: true })
+  await page.setViewportSize({ width: 1440, height: 1120 })
+  await page.getByRole('switch', { name: 'Dark mode' }).click()
+  await page.locator('html[data-theme="dark"]').waitFor()
+  await page.evaluate(() =>
+    Promise.all(
+      document
+        .getAnimations()
+        .filter((animation) => animation.effect?.getTiming().iterations !== Infinity)
+        .map((animation) => animation.finished),
+    ),
+  )
+  await page.screenshot({ path: 'docs/screenshots/dark.png', fullPage: true })
   console.log(
     'Horizontal overflow:',
     await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),

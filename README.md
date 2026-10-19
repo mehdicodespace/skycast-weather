@@ -11,6 +11,7 @@ A weather dashboard built with React 19, TypeScript, Vite, and TanStack Query. S
 - Wind, humidity, surface pressure, peak UV, sunrise, and sunset.
 - City search with a short debounce, keyboard navigation, and country/region labels.
 - Browser location, saved places, and Celsius/Fahrenheit preferences.
+- Light and dark themes, with a saved preference and a system-based default.
 - Shareable city URLs that work with browser back and forward navigation.
 - Loading, empty, offline, and retry states. An unsuccessful refresh keeps the last forecast visible.
 
@@ -22,6 +23,8 @@ Forecasts come from [Open-Meteo](https://open-meteo.com/). There’s no API key 
 <img src="docs/screenshots/mobile.png" width="320" alt="Skycast mobile layout with horizontally scrollable places and hourly forecasts" />
 
 ![Keyboard-accessible city search](docs/screenshots/city-search.png)
+
+![Skycast in dark mode](docs/screenshots/dark.png)
 
 </details>
 
