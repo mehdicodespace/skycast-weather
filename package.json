@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",
+    "screenshots": "node scripts/capture-screenshots.mjs",
     "check:api": "node --env-file-if-exists=.env scripts/check-api.mjs"
   },
   "dependencies": {
